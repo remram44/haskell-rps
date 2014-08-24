@@ -17,6 +17,7 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 executable rps
+  ghc-options:         -Wall
   main-is:             Rps.hs
   -- other-modules:
   -- other-extensions:

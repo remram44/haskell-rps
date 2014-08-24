@@ -1,3 +1,5 @@
+module Rps where
+
 import Data.Char (toUpper)
 import System.IO (stdout, hFlush)
 import System.Random
@@ -14,7 +16,7 @@ winner SCISSORS ROCK    = COMPUTER
 winner PAPER ROCK       = PLAYER
 winner SCISSORS PAPER   = PLAYER
 winner ROCK SCISSORS    = PLAYER
-winner x y              = DRAW
+winner _ _              = DRAW
 
 -- Scoring
 updateScores :: (Num a) => (a, a) -> Winner -> (a, a)
@@ -65,6 +67,7 @@ playRound g scores = do
     if again then playRound g scores else return ()
 
 -- Entry point: just starts playRound with null scores
+main :: IO ()
 main = do
     g <- newStdGen
     playRound g (0, 0)
