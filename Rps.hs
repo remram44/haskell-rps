@@ -27,17 +27,17 @@ instance Random Choice where
     randomR (a, b) g =
         case randomR (fromEnum a, fromEnum b) g of
             (x, g') -> (toEnum x, g')
-    random g = randomR (minBound, maxBound) g
+    random = randomR (minBound, maxBound)
 
 play :: StdGen -> IO (Winner, StdGen)
 play g = do
     putStr "Choose between rock, paper and scissors: "
     hFlush stdout
     input <- getLine
-    playerChoice <- return (read (map toUpper input))
+    let playerChoice = read (map toUpper input)
     (computerChoice, g) <- return (random g :: (Choice, StdGen))
-    putStrLn $ "Computer: " ++ (show computerChoice)
-    return ((winner playerChoice computerChoice), g)
+    putStrLn $ "Computer: " ++ show computerChoice
+    return (winner playerChoice computerChoice, g)
 
 -- "Play again" prompt
 askPlayAgain :: IO Bool
@@ -59,12 +59,10 @@ playRound g scores = do
                    DRAW     -> putStrLn "It was a draw"
 
     scores <- return (updateScores scores whoWon)
-    putStrLn $ "Score is " ++ (show $ fst scores) ++ " to " ++ (show $ snd scores)
+    putStrLn ("Score is " ++ show (fst scores) ++ " to " ++ show (snd scores))
 
     again <- askPlayAgain
-    case again of
-        False -> return ()
-        True -> playRound g scores
+    if again then playRound g scores else return ()
 
 -- Entry point: just starts playRound with null scores
 main = do
