@@ -24,3 +24,10 @@ executable rps
   build-depends:       base >=4.6 && <4.7, random >=1.0 && <1.1
   -- hs-source-dirs:
   default-language:    Haskell98
+
+test-suite tests
+  ghc-options:         -Wall
+  type:                exitcode-stdio-1.0
+  main-is:             RpsTests.hs
+  build-depends:       base >=4.6 && <4.7, random >=1.0 && <1.1, hspec >= 1.11
+  default-language:    Haskell98
